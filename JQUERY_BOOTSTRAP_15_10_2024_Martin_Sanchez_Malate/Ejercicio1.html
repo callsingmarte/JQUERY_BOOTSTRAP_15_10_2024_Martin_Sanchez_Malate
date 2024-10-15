@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ejercicio 1</title>
+    <script src="Scripts/jquery-2.0.0.js"></script>
+    <style type="text/css">
+        .verde {
+            color: green;
+        }
+        .azul {
+            color: blue;
+        }
+        .borde {
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <p>Primero</p>
+    <ul>
+        <li>Base de Datos</li>
+        <li>Lenguaje de Marcas</li>
+        <li></li>
+    </ul>
+    <p>Segundo</p>
+    <ul>
+        <li>
+            DWESE
+            <ul data-hours="10">
+                <li class="azul">Desarrollo Web en Entorno Servidor</li>
+            </ul>
+        </li>
+        <li>
+            DWECL
+            <ul data-hours="7">
+                <li class="azul">Desarrollo Web en Entorno Cliente</li>
+            </ul>
+        </li>
+
+        <li>
+            DAW
+            <ul data-hours="3">
+                <li class="azul">Despliegue de Aplicaciones Web</li>
+            </ul>
+        </li>
+        <li>
+            DIWEB
+            <ul data-hours="6">
+                <li class="azul">Diseño de interfaces Web</li>
+            </ul>
+        </li>
+        <li>
+            EIE
+            <ul data-hours="4">
+                <li class="azul">Entorno e iniciativa Empresarial</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
+<script>
+    $(function () {
+        //1. Asignar la clase borde a Primero y Segundo
+        $("p:contains('Primero') , p:contains('Segundo')").addClass("borde");
+        //2. Asignar la clase verde a las abreviaturas de cada módulo de segundo
+        $("p:contains('Segundo') + ul li").addClass("verde");
+
+        //3. Eliminar la clase borde de Primero y Segundo
+        $("p:contains('Primero') , p:contains('Segundo')").removeClass("borde")
+
+        //4. Asignar o Quitar la clase borde según hagamos click sobre primero o segundo
+        $("p:contains('Primero')").on('click', () => {
+            $("p:contains('Primero')").hasClass("borde") ? $("p:contains('Primero')").removeClass("borde") : $("p:contains('Primero')").addClass("borde");
+        })
+        $("p:contains('Segundo')").on('click', () => {
+            $("p:contains('Segundo')").hasClass("borde") ? $("p:contains('Segundo')").removeClass("borde") : $("p:contains('Segundo')").addClass("borde");
+        })
+        //5. Selecciona todos los módulos de primero
+        console.log("Modulos de primero:", $("p:contains('Primero') + ul li").text())
+        //6. Selecciona los ítems vacíos y añade el contenido 'Nodo vacío'
+        $(":empty").text("Nodo vacío");
+        //7. Modifica “Primero” por “Módulos de Primero”
+        $("p:contains('Primero')").text("Módulos de Primero");
+        //8. Modifica “Segundo” por “Módulos de Segundo”
+        $("p:contains('Segundo')").text("Módulos de Segundo");
+        //9. Eliminar los elementos de las listas que estén vacíos
+        $("li:empty").remove();
+        //10. En la lista de los módulos de “Segundo” añade al final de cada uno de ellos la cantidad de horas cuando se haga click sobre ellos
+        $("p:contains('Segundo') + ul li ul li").on("click", function () {
+            let horas = $(this).parent().attr("data-hours");
+            $(this).text($(this).text() + "(" + horas + "h)");
+        })
+    });
+</script>
